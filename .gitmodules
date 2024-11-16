@@ -1,0 +1,3 @@
+[submodule "submodules/themes/hugo-theme-re-terminal"]
+	path = submodules/themes/hugo-theme-re-terminal
+	url = git@github.com:mirus-ua/hugo-theme-re-terminal.git
