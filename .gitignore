@@ -1,2 +1,5 @@
 # artifacts
 build/*
+
+# local user config
+.envrc
