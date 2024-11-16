@@ -1,0 +1,13 @@
+name: hugosite
+channels:
+  - conda-forge
+  - r
+  - nodefaults
+
+dependencies:
+  # website core dependencies
+  - hugo == 0.138.0
+  - quarto == 1.5.57
+  # scripting
+  - python >= 3.10
+  - ipython
