@@ -1,0 +1,48 @@
+baseURL = 'https://mikedecr.netlify.app'
+languageCode = 'en-us'
+title = ':: Michael DeCrescenzo'
+theme = 'hugo-theme-re-terminal'
+pagination.pagerSize = 5
+
+[params]
+themeColor = "orange"
+contentTypeName = "posts"
+showMenuItems = 5
+
+[languages]
+[languages.en.params]
+    readMore = "Read More"
+    menuMore = "Show More"
+    newerPosts = "Next post"
+    olderPosts = "Previous post"
+    [languages.en.params.logo]
+        logoText = "Michael DeCrescenzo"
+
+# nav menu
+[languages.en.menu]
+[[languages.en.menu.main]]
+    identifier = "blog"
+    name = "Blog"
+    url = "/blog"
+[[languages.en.menu.main]]
+    identifier = "about"
+    name = "About"
+    url = "/"
+
+# tell md -> html markup to ignore math-related chars
+[markup]
+  [markup.goldmark]
+    [markup.goldmark.extensions]
+      [markup.goldmark.extensions.passthrough]
+        enable = true
+        [markup.goldmark.extensions.passthrough.delimiters]
+          block = [['\[', '\]'], ['$$', '$$']]
+          inline = [['\(', '\)'], ['$', '$']]
+
+
+# --- for quarto ---
+# hugo shouldn't touch these
+ignoreFiles = [ "\\.qmd$", "\\.ipynb$", "\\.py$" ]
+# hugo should allow raw HTML in .md
+[markup.goldmark.renderer]
+unsafe= true
