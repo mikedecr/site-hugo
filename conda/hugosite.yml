@@ -11,3 +11,4 @@ dependencies:
   # scripting
   - python >= 3.10
   - ipython
+  - typer
