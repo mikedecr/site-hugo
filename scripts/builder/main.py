@@ -6,6 +6,7 @@ from typing import List, Optional
 from typer import Typer, Option
 
 from ._links import create_links
+
 app = Typer(name = "Hugo Site Builder")
 
 
@@ -60,7 +61,7 @@ def quarto_render_file(path: Path, source_path = "src"):
     else:
         prefix_path = None
         print("rendering", path, "in default environment")
-    umrun(["quarto", "render", path], prefix = prefix_path)
+    return umrun(["quarto", "render", path], prefix = prefix_path)
 
 
 @app.command()
@@ -80,23 +81,18 @@ DOC_SOURCE_DIR = "Directory where quarto source files are located"
 
 @app.command()
 def render_quarto(
-    source_dir: str = Option("src", "--source-dir", "-s",
-                             help=DOC_SOURCE_DIR),
+    source_dir: str = Option("src", "--source-dir", "-s", help=DOC_SOURCE_DIR),
 ):
     source_path: Path = Path(source_dir).resolve()
-    # find quarto files
     try:
         render_files: List[Path] = find_quarto_render_sources(source_path)
         from pprint import pprint
         pprint(list(map(str, render_files)))
     except FileNotFoundError:
         raise FileNotFoundError(f"{source_path=} does not exist")
-    # no files found
     if len(render_files) == 0:
         raise ValueError(f"Found no files to render in {source_path=}")
-    # render each file
-    for file in render_files:
-        _ = quarto_render_file(file, source_path)
+    return [quarto_render_file(file, source_path) for file in render_files]
 
 
 @app.command()
