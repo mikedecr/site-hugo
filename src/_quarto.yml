@@ -1,0 +1,9 @@
+project:
+  output-dir: ../hugo/content
+  render:
+    - "*.qmd"
+    - ".md"
+
+format: hugo-md
+freeze: auto
+
