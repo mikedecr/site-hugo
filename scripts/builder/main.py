@@ -5,6 +5,7 @@ from typing import List, Optional
 
 from typer import Typer, Option
 
+from ._links import create_links
 app = Typer(name = "Hugo Site Builder")
 
 
@@ -111,6 +112,13 @@ def build(
     """
     render_quarto(source_dir)
     serve()
+
+
+@app.command()
+def init():
+    blog_src = "submodules/blog-monorepo"
+    blog_dest = "src/blog"
+    create_links(blog_src, blog_dest)
 
 
 if __name__ == "__main__":
