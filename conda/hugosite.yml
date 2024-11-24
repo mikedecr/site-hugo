@@ -12,3 +12,4 @@ dependencies:
   - python >= 3.10
   - ipython
   - typer
+  - setuptools
