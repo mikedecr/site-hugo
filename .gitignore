@@ -8,6 +8,9 @@ build/*
 hugo/public
 hugo/.hugo_build.lock
 
+# quarto build
+src/*index_files
+
 # local user config
 .envrc
 
