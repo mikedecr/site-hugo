@@ -4,3 +4,6 @@
 [submodule "submodules/blog/nonflat-priors"]
 	path = submodules/blog/nonflat-priors
 	url = git@github.com:mikedecr/post_nonflat-priors.git
+[submodule "submodules/blog-monorepo"]
+	path = submodules/blog-monorepo
+	url = git@github.com:mikedecr/blog-monorepo.git
