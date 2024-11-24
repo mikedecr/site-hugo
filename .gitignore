@@ -3,3 +3,5 @@ build/*
 
 # local user config
 .envrc
+hugo/public
+hugo/.hugo_build.lock
