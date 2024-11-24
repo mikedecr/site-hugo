@@ -1,7 +1,15 @@
-# artifacts
+# env artifacts
 build/*
+
+# python packaging
+*egg-info
+
+# hugo
+hugo/public
+hugo/.hugo_build.lock
 
 # local user config
 .envrc
-hugo/public
-hugo/.hugo_build.lock
+
+# everything else
+*__pycache__
