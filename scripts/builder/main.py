@@ -1,14 +1,30 @@
 import os
 from pathlib import Path
 from subprocess import run, CompletedProcess
-from typing import List, Optional
+import tomllib
+from typing import Any, Dict, List, Optional, Union
 
-from typer import Typer, Option
+from typer import Typer, Option, Context
 
 from ._links import create_links
 from ._logging import log
 
 app = Typer(name = "Hugo Site Builder")
+
+
+@app.callback()
+def _callback(context: Context,
+              config_file: str = Option("pyproject.toml", "-f", "--file")):
+    toml_data: Dict = read_toml(config_file)
+    context.obj = toml_data
+    return context
+
+
+def read_toml(file: Union[str, Path]) -> Dict:
+    with open(file, "rb") as f:
+        data: Dict = tomllib.load(f)
+        return data
+
 
 
 _default_prefix = os.environ['CONDA_PREFIX']
@@ -101,6 +117,7 @@ def render_quarto(
 
 @app.command()
 def build(
+        context: Context,
         quarto: bool = Option(True, "--quarto", "-q",
                               help = "Render quarto files in source directory"),
         source_dir: str = Option("src", "--source-dir", "-s",
@@ -110,15 +127,45 @@ def build(
     - render all qmds
     - serve site
     """
+    init(context)
     render_quarto(source_dir)
     serve()
 
 
+def get_nested_path(data: Dict, *args) -> Any:
+    for rg in args:
+        data = data[rg]
+    return data
+
+
+def flatten_nested_dict(nested, sep = "_"):
+    """
+    credit: Matias Thayer, <https://stackoverflow.com/a/64717285>
+    """
+    stack = list(nested.items())
+    ans = {}
+    while stack:
+        key, val = stack.pop()
+        if isinstance(val, dict):
+            for sub_key, sub_val in val.items():
+                stack.append((f"{key}{sep}{sub_key}", sub_val))
+        else:
+            ans[key] = val
+    return ans
+
 @app.command()
-def init():
-    blog_src = "submodules/blog-monorepo"
-    blog_dest = "src/blog"
-    create_links(blog_src, blog_dest)
+def init(context: Context):
+    # currently just a "symlink blog posts" step
+    links: Dict = get_nested_path(context.obj, "mkd", "links")
+    dest_to_srcs: Dict = flatten_nested_dict(links, sep = "/")
+    log.info("symlink recipe:\n" + str(dest_to_srcs))
+    for dest, sources in dest_to_srcs.items():
+        dest_path: Path = Path(dest)
+        for source in sources:
+            source_path: Path = Path(source)
+            name: str = source_path.name
+            dest_with_name: Path = dest_path / name
+            create_links(source_path, dest_with_name)
 
 
 if __name__ == "__main__":

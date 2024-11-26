@@ -1,0 +1,9 @@
+[project]
+name = "mikedecr-website"
+author = "Michael DeCrescenzo"
+description = "Personal website"
+Repository = "https://github.com/mikedecr/site-hugo"
+Issues = "https://github.com/mikedecr/site-hugo/issues"
+
+[mkd.links]
+src.blog = ["submodules/blog-monorepo/causal-bayes-3-pillars"]
