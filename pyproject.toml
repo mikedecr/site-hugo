@@ -1,9 +1,13 @@
 [project]
 name = "mikedecr-website"
-author = "Michael DeCrescenzo"
 description = "Personal website"
-Repository = "https://github.com/mikedecr/site-hugo"
-Issues = "https://github.com/mikedecr/site-hugo/issues"
+version = "0.1.0"
+# author = "Michael DeCrescenzo"
+# Repository = "https://github.com/mikedecr/site-hugo"
+# Issues = "https://github.com/mikedecr/site-hugo/issues"
+
+[project.scripts]
+mkd = "scripts.builder.main:app"
 
 [mkd.links]
 src.blog = [
