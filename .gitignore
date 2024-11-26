@@ -16,3 +16,4 @@ src/*index_files
 
 # everything else
 *__pycache__
+src/_freeze/blog/nonflat-priors/index/execute-results
