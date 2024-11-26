@@ -1,9 +1,6 @@
 [submodule "submodules/themes/hugo-theme-re-terminal"]
 	path = submodules/themes/hugo-theme-re-terminal
 	url = git@github.com:mirus-ua/hugo-theme-re-terminal.git
-[submodule "submodules/blog/nonflat-priors"]
-	path = submodules/blog/nonflat-priors
-	url = git@github.com:mikedecr/post_nonflat-priors.git
 [submodule "submodules/blog-monorepo"]
 	path = submodules/blog-monorepo
 	url = git@github.com:mikedecr/blog-monorepo.git
