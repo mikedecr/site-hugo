@@ -6,4 +6,7 @@ Repository = "https://github.com/mikedecr/site-hugo"
 Issues = "https://github.com/mikedecr/site-hugo/issues"
 
 [mkd.links]
-src.blog = ["submodules/blog-monorepo/causal-bayes-3-pillars"]
+src.blog = [
+    "submodules/blog-monorepo/causal-bayes-3-pillars",
+    "submodules/blog-monorepo/nonflat-priors"
+]
