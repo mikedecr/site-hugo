@@ -1,2 +1,2 @@
-ln -s submodules/themes themes
+ln -sf submodules/themes hugo/themes
 
