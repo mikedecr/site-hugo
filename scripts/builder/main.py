@@ -6,18 +6,24 @@ from typing import List, Optional
 from typer import Typer, Option
 
 from ._links import create_links
+from ._logging import log
 
 app = Typer(name = "Hugo Site Builder")
 
 
-def umrun(cmd: List[str], prefix: Optional = None) -> CompletedProcess:
+_default_prefix = os.environ['CONDA_PREFIX']
+
+
+def umrun(cmd: List[str], prefix: Optional = None, capture_output = True) -> CompletedProcess:
     assert type(cmd) is list, f"{cmd=} must be a list"
     mamba = os.environ["MAMBA_EXE"]
     if prefix is None:
-        prefix = os.environ['CONDA_PREFIX']
+        prefix = _default_prefix
+        log.warning("falling back to " + prefix)
     cmd = [mamba, "run", "-p", prefix, *cmd]
-    print(cmd)
-    return run(cmd)
+    ret = run(cmd, capture_output = capture_output)
+    log.info("umrun: " + " ".join(map(str, ret.args)))
+    return ret
 
 
 def find_quarto_render_sources(
@@ -56,11 +62,9 @@ def quarto_render_file(path: Path, source_path = "src"):
     root = Path(os.getcwd())
     subpath = parent.relative_to(root)
     prefix_path = root / "build/conda_envs" / subpath
-    if prefix_path.exists():
-        print("found prefix", prefix_path, "for", path)
-    else:
-        prefix_path = None
-        print("rendering", path, "in default environment")
+    if not prefix_path.exists():
+        prefix_path = os.environ['CONDA_PREFIX']
+    log.info(" ".join(map(str, ["rendering", path, "in", prefix_path])))
     return umrun(["quarto", "render", path], prefix = prefix_path)
 
 
@@ -73,7 +77,7 @@ def serve():
         "--disableFastRender",
         "--buildDrafts",
     ]
-    umrun(cmd)
+    umrun(cmd, capture_output = False)
 
 
 DOC_SOURCE_DIR = "Directory where quarto source files are located"
@@ -86,8 +90,8 @@ def render_quarto(
     source_path: Path = Path(source_dir).resolve()
     try:
         render_files: List[Path] = find_quarto_render_sources(source_path)
-        from pprint import pprint
-        pprint(list(map(str, render_files)))
+        log.info("Found qmd source files:" +
+                 "\n - ".join(map(str, render_files)))
     except FileNotFoundError:
         raise FileNotFoundError(f"{source_path=} does not exist")
     if len(render_files) == 0:
