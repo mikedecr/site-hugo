@@ -8,13 +8,17 @@ build/*
 hugo/public
 hugo/.hugo_build.lock
 
-# quarto build
+# --- quarto build ---
+src/.quarto/
 src/*index_files
-src/_freeze  # for now...
+# freeze, for now
+src/_freeze
+# by default we assume that stuff in blog/ isn't unique to this repo.
+# we can add exceptions ad hoc
+src/blog/*
 
 # local user config
 .envrc
 
 # everything else
 *__pycache__
-src/_freeze/blog/nonflat-priors/index/execute-results

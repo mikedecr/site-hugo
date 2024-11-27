@@ -1,5 +1,0 @@
-/.quarto/
-
-# by default we assume that stuff in blog/ isn't unique to this repo.
-# we can add exceptions ad hoc
-blog/*
