@@ -9,8 +9,10 @@ version = "0.1.0"
 [project.scripts]
 mkd = "scripts.builder.main:app"
 
-[mkd.links]
-src.blog = [
-    "submodules/blog-monorepo/causal-bayes-3-pillars",
-    "submodules/blog-monorepo/nonflat-priors"
-]
+# register symlinks
+[mkd.links.hugo]
+themes = "submodules/themes"
+
+[mkd.links.src.blog]
+causal-bayes-3-pillars = "submodules/blog-monorepo/causal-bayes-3-pillars"
+nonflat-priors = "submodules/blog-monorepo/nonflat-priors"

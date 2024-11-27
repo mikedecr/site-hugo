@@ -194,19 +194,19 @@ def flatten_nested_dict(nested, sep = "_"):
             ans[key] = val
     return ans
 
+
 @app.command()
 def init(context: Context):
-    # currently just a "symlink blog posts" step
-    links: Dict = get_nested_path(context.obj, "mkd", "links")
-    dest_to_srcs: Dict = flatten_nested_dict(links, sep = "/")
-    log.info("symlink recipe:\n" + str(dest_to_srcs))
-    for dest, sources in dest_to_srcs.items():
-        dest_path: Path = Path(dest)
-        for source in sources:
-            source_path: Path = Path(source)
-            name: str = source_path.name
-            dest_with_name: Path = dest_path / name
-            create_links(source_path, dest_with_name)
+    # currently just a "symlinks" step
+    link(context)
+
+
+def link(context: Context):
+    link_toml: Dict = get_nested_path(context.obj, "mkd", "links")
+    link_to_target: Dict = flatten_nested_dict(link_toml, sep = "/")
+    log.info("symlink recipe:\n" + str(link_to_target))
+    for link_dir, target_dir in link_to_target.items():
+        create_links(Path(target_dir), Path(link_dir))
 
 
 if __name__ == "__main__":
