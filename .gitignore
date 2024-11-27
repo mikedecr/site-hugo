@@ -10,6 +10,7 @@ hugo/.hugo_build.lock
 
 # quarto build
 src/*index_files
+src/_freeze  # for now...
 
 # local user config
 .envrc
