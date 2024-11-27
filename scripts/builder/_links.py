@@ -37,5 +37,5 @@ def create_links(target_dir, link_dir):
             if os.path.exists(link_file) or os.path.islink(link_file):
                 log.debug(f"Replacing existing file or link: {link_file}")
                 os.remove(link_file)
-            os.symlink(target_file, link_file)
+            os.link(target_file, link_file)
             log.info(f"Created link: {link_file} -> {target_file}")
