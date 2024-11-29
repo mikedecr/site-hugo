@@ -27,16 +27,16 @@ def read_toml(file: Union[str, Path]) -> Dict:
 
 
 
-# _default_prefix = os.environ['CONDA_PREFIX']
+# for now we still assume there is a (micro)mamba executable
 _um = os.environ["MAMBA_EXE"]
 
 
 def umrun(cmd: List[str], prefix: Optional = None, capture_output = True) -> CompletedProcess:
     assert type(cmd) is list, f"{cmd=} must be a list"
-    if prefix is None:
-        prefix = _default_prefix
-        log.warning("falling back to " + prefix)
-    cmd = [_um, "run", "-p", prefix, *cmd]
+    _umrun_cmd = [_um, "run"]
+    if prefix is not None:
+        _umrun_cmd.extend(["-p", prefix])
+    cmd = [*_umrun_cmd, *cmd]
     log.info("umrun: " + " ".join(map(str, cmd)))
     ret = run(cmd, capture_output = capture_output)
     return ret
@@ -97,50 +97,39 @@ def _uvx_render(path: str):
 
 def resolve_conda_prefix(path):
     parent = path.parent
-    # find the environment
+    # if env exists, return its path
     root: Path = Path(os.getcwd())
     subpath: Path = parent.relative_to(root)
     prefix_path: Path = root / "build/conda_envs" / subpath
-    # return detected environment
     if prefix_path.exists():
         return prefix_path
     log.warning(f"did not find environment at {prefix_path}")
-    # search for parent/conda/insert_env_name.yml
+    # find an env yml, return None if not
     conda_yaml_dir: Path = parent / "conda"
     log.info(f"searching for conda ymls in {conda_yaml_dir}")
-    # conda/ doesn't exist
     if not conda_yaml_dir.exists():
-        # prefix_path: Path = Path(_default_prefix)
-        # log.warning(f"can't find {conda_yaml_dir}. Falling back to {prefix_path}")
-        # return prefix_path
         return None
-    # found conda
+    # identify ymls, return None if there aren't any
     conda_yamls: List[Path] = [
         file for file in conda_yaml_dir.iterdir()
         if file.suffix in (".yml", ".yaml")
     ]
     log.info(f"conda yamls: {conda_yamls}")
-    # no ymls
     if len(conda_yamls) == 0:
-        # prefix_path: Path = Path(_default_prefix)
-        # log.warning(f"Can't find an env recipe in {conda_yaml_dir}. Falling back to {prefix_path}")
-        # return prefix_path
         return None
     yml = conda_yamls[0]
-    # too many ymls
+    # build first first / only yml
     if len(conda_yamls) > 1:
         log.warning(f"Multiple yamls found: {conda_yamls}. Picking the first one: {yml}.")
-        create_env(yml, prefix_path)
         return prefix_path
     log.info(f"found {yml}")
-    create_env(conda_yamls[0], prefix_path)
+    create_micromamba_env(yml, prefix_path)
     return prefix_path
 
 
-def create_env(env_yml: Path, prefix_path: Path):
+def create_micromamba_env(env_yml: Path, prefix_path: Path):
     return umrun(
-        [_um, "env", "create", "-f", env_yml, "-p", prefix_path, "-y"],
-        prefix = _default_prefix,
+        cmd = [_um, "env", "create", "-f", env_yml, "-p", prefix_path, "-y"],
         capture_output = False
     )
 
