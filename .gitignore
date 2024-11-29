@@ -9,13 +9,14 @@ hugo/public
 hugo/.hugo_build.lock
 
 # --- quarto build ---
-src/.quarto/
-src/*index_files
+qmd/.quarto/
+qmd/*index_files
 # freeze, for now
-src/_freeze
+qmd/_freeze
 # by default we assume that stuff in blog/ isn't unique to this repo.
 # we can add exceptions ad hoc
-src/blog/*
+qmd/blog/*
+!qmd/blog/index.qmd
 
 # local user config
 .envrc

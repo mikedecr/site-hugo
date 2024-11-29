@@ -27,7 +27,7 @@ def read_toml(file: Union[str, Path]) -> Dict:
 
 
 
-_default_prefix = os.environ['CONDA_PREFIX']
+# _default_prefix = os.environ['CONDA_PREFIX']
 _um = os.environ["MAMBA_EXE"]
 
 
@@ -38,6 +38,13 @@ def umrun(cmd: List[str], prefix: Optional = None, capture_output = True) -> Com
         log.warning("falling back to " + prefix)
     cmd = [_um, "run", "-p", prefix, *cmd]
     log.info("umrun: " + " ".join(map(str, cmd)))
+    ret = run(cmd, capture_output = capture_output)
+    return ret
+
+
+def uvx(cmd: List[str], capture_output = True) -> CompletedProcess:
+    cmd = ["uvx", *cmd]
+    log.info("uvx: " + " ".join(map(str, cmd)))
     ret = run(cmd, capture_output = capture_output)
     return ret
 
@@ -73,17 +80,28 @@ def quarto_render_file(path: Path):
     - if no env file, continue
     """
     path = Path(path).resolve()
-    prefix_path = resolve_prefix(path)
+    if (conda_prefix := resolve_conda_prefix(path)):
+        return _micromamba_render(path, conda_prefix)
+    else:
+        return _uvx_render(path)
+
+
+def _micromamba_render(path: str, prefix_path: str):
     log.info(" ".join(map(str, ["rendering", path, "in", prefix_path])))
     return umrun(["quarto", "render", path], prefix = prefix_path, capture_output=False)
 
 
-def resolve_prefix(path):
+def _uvx_render(path: str):
+    return uvx(["quarto", "render", path], capture_output = False)
+
+
+def resolve_conda_prefix(path):
     parent = path.parent
     # find the environment
     root: Path = Path(os.getcwd())
     subpath: Path = parent.relative_to(root)
     prefix_path: Path = root / "build/conda_envs" / subpath
+    # return detected environment
     if prefix_path.exists():
         return prefix_path
     log.warning(f"did not find environment at {prefix_path}")
@@ -92,9 +110,10 @@ def resolve_prefix(path):
     log.info(f"searching for conda ymls in {conda_yaml_dir}")
     # conda/ doesn't exist
     if not conda_yaml_dir.exists():
-        prefix_path: Path = Path(_default_prefix)
-        log.warning(f"can't find {conda_yaml_dir}. Falling back to {prefix_path}")
-        return prefix_path
+        # prefix_path: Path = Path(_default_prefix)
+        # log.warning(f"can't find {conda_yaml_dir}. Falling back to {prefix_path}")
+        # return prefix_path
+        return None
     # found conda
     conda_yamls: List[Path] = [
         file for file in conda_yaml_dir.iterdir()
@@ -103,9 +122,10 @@ def resolve_prefix(path):
     log.info(f"conda yamls: {conda_yamls}")
     # no ymls
     if len(conda_yamls) == 0:
-        prefix_path: Path = Path(_default_prefix)
-        log.warning(f"Can't find an env recipe in {conda_yaml_dir}. Falling back to {prefix_path}")
-        return prefix_path
+        # prefix_path: Path = Path(_default_prefix)
+        # log.warning(f"Can't find an env recipe in {conda_yaml_dir}. Falling back to {prefix_path}")
+        # return prefix_path
+        return None
     yml = conda_yamls[0]
     # too many ymls
     if len(conda_yamls) > 1:
@@ -134,7 +154,7 @@ def serve():
         "--disableFastRender",
         "--buildDrafts",
     ]
-    umrun(cmd, capture_output = False)
+    uvx(cmd, capture_output = False)
 
 
 DOC_SOURCE_DIR = "Directory where quarto source files are located"
@@ -142,7 +162,7 @@ DOC_SOURCE_DIR = "Directory where quarto source files are located"
 
 @app.command()
 def render_quarto(
-    source_dir: str = Option("src", "--source-dir", "-s", help=DOC_SOURCE_DIR),
+    source_dir: str = Option("qmd", "--source-dir", "-s", help=DOC_SOURCE_DIR),
 ):
     source_path: Path = Path(source_dir).resolve()
     try:
@@ -161,7 +181,7 @@ def build(
         context: Context,
         quarto: bool = Option(True, "--quarto", "-q",
                               help = "Render quarto files in source directory"),
-        source_dir: str = Option("src", "--source-dir", "-s",
+        source_dir: str = Option("qmd", "--source-dir", "-s",
                                  help = DOC_SOURCE_DIR)
 ):
     """
