@@ -13,9 +13,11 @@ Requires:
 - for historical reasons, [micromamba](https://mamba.readthedocs.io/en/latest/installation/micromamba-installation.html)
 
 ```sh
-git clone git@github.com:mikedecr/site-hugo.git mikedecr-site
-cd mikedecr-site
-git submodule update --init --recursuve
+git clone git@github.com:mikedecr/site-hugo.git mikedecr-site && cd mikedecr-site
+# website theme & blog posts are submodules
+git submodule update --init --recursive
+# builds local venv & installs locally defined scripting tools
 uv sync
+# symlink submodule content, render blog posts, & serve site locally
 uv run mkd build
 ```
