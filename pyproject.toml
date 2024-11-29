@@ -2,17 +2,22 @@
 name = "mikedecr-website"
 description = "Personal website"
 version = "0.1.0"
+dependencies = [
+    "quarto>=0.1.0",
+    "typer>=0.14.0",
+    "hugo == 0.138.0"
+]
 # author = "Michael DeCrescenzo"
 # Repository = "https://github.com/mikedecr/site-hugo"
 # Issues = "https://github.com/mikedecr/site-hugo/issues"
 
 [project.scripts]
-mkd = "scripts.builder.main:app"
+mkd = "mkd.main:app"
 
 # register symlinks
 [mkd.links.hugo]
 themes = "submodules/themes"
 
-[mkd.links.src.blog]
+[mkd.links.qmd.blog]
 causal-bayes-3-pillars = "submodules/blog-monorepo/causal-bayes-3-pillars"
 nonflat-priors = "submodules/blog-monorepo/nonflat-priors"
