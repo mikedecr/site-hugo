@@ -11,6 +11,10 @@ dependencies = [
 # Repository = "https://github.com/mikedecr/site-hugo"
 # Issues = "https://github.com/mikedecr/site-hugo/issues"
 
+
+[tool.uv]
+package = true
+
 [project.scripts]
 mkd = "mkd.main:app"
 
