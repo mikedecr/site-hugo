@@ -3,7 +3,6 @@ name = "mikedecr-website"
 description = "Personal website"
 version = "0.1.0"
 dependencies = [
-    "quarto>=0.1.0",
     # "quarto>=0.1.0",  # no... this is a python pkg for rendering in subprocesses
     "quarto-cli == 1.6.*",
     "typer>=0.14.0",
