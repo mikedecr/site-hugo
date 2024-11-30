@@ -88,6 +88,8 @@ def quarto_render_file(path: Path):
 
 def _micromamba_render(path: str, prefix_path: str):
     log.info(" ".join(map(str, ["rendering", path, "in", prefix_path])))
+    which_quarto = umrun(["which", "quarto"], prefix=prefix_path, capture_output=True).stdout
+    log.info(f"which quarto: {which_quarto}")
     return umrun(["quarto", "render", path], prefix = prefix_path, capture_output=False)
 
 
@@ -108,14 +110,15 @@ def resolve_conda_prefix(path):
     conda_yaml_dir: Path = parent / "conda"
     log.info(f"searching for conda ymls in {conda_yaml_dir}")
     if not conda_yaml_dir.exists():
+        log.warning(f"{conda_yaml_dir} doesn't exist")
         return None
     # identify ymls, return None if there aren't any
     conda_yamls: List[Path] = [
         file for file in conda_yaml_dir.iterdir()
         if file.suffix in (".yml", ".yaml")
     ]
-    log.info(f"conda yamls: {conda_yamls}")
     if len(conda_yamls) == 0:
+        log.warning(f"No yamls in {conda_yaml_dir}")
         return None
     yml = conda_yamls[0]
     # build first first / only yml
