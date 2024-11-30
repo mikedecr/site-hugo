@@ -42,9 +42,9 @@ def umrun(cmd: List[str], prefix: Optional = None, capture_output = True) -> Com
     return ret
 
 
-def uvx(cmd: List[str], capture_output = True) -> CompletedProcess:
-    cmd = ["uvx", *cmd]
-    log.info("uvx: " + " ".join(map(str, cmd)))
+def uv_run(cmd: List[str], capture_output = True) -> CompletedProcess:
+    cmd = ["uv", "run", *cmd]
+    log.info("uv_run: " + " ".join(map(str, cmd)))
     ret = run(cmd, capture_output = capture_output)
     return ret
 
@@ -92,7 +92,7 @@ def _micromamba_render(path: str, prefix_path: str):
 
 
 def _uvx_render(path: str):
-    return uvx(["quarto", "render", path], capture_output = False)
+    return uv_run(["quarto", "render", path], capture_output = False)
 
 
 def resolve_conda_prefix(path):
@@ -143,7 +143,7 @@ def serve():
         "--disableFastRender",
         "--buildDrafts",
     ]
-    uvx(cmd, capture_output = False)
+    uv_run(cmd, capture_output = False)
 
 
 DOC_SOURCE_DIR = "Directory where quarto source files are located"
