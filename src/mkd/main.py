@@ -1,58 +1,31 @@
 import os
 from pathlib import Path
-from subprocess import run, CompletedProcess
-import tomllib
-from typing import Any, Dict, List, Optional, Union
+# from subprocess import run, CompletedProcess
+from typing import Any, Dict, List
 
-from typer import Typer, Option, Context
+from typer import Option, Context
 
-from ._links import create_links
-from ._logging import log
+from .links import create_links
+from .logging import log
+from .runners import uv_run, micromamba_run, mamba_exe
 
-app = Typer(name = "Hugo Site Builder")
-
-
-@app.callback()
-def _callback(context: Context,
-              config_file: str = Option("pyproject.toml", "-f", "--file")):
-    toml_data: Dict = read_toml(config_file)
-    context.obj = toml_data
-    return context
+from .app import app
 
 
-def read_toml(file: Union[str, Path]) -> Dict:
-    with open(file, "rb") as f:
-        data: Dict = tomllib.load(f)
-        return data
+QUARTO_SOURCE_SUFFIXES = [
+    ".md",
+    ".qmd"
+]
 
-
-
-# for now we still assume there is a (micro)mamba executable
-_um = os.environ["MAMBA_EXE"]
-
-
-def umrun(cmd: List[str], prefix: Optional = None, capture_output = True) -> CompletedProcess:
-    assert type(cmd) is list, f"{cmd=} must be a list"
-    _umrun_cmd = [_um, "run"]
-    if prefix is not None:
-        _umrun_cmd.extend(["-p", prefix])
-    cmd = [*_umrun_cmd, *cmd]
-    log.info("umrun: " + " ".join(map(str, cmd)))
-    ret = run(cmd, capture_output = capture_output)
-    return ret
-
-
-def uv_run(cmd: List[str], capture_output = True) -> CompletedProcess:
-    cmd = ["uv", "run", *cmd]
-    log.info("uv_run: " + " ".join(map(str, cmd)))
-    ret = run(cmd, capture_output = capture_output)
-    return ret
+QUARTO_EXCLUDE_FILENAMES = [
+    "README.md"
+]
 
 
 def find_quarto_render_sources(
         path: Path,
-        extensions = [".md", ".qmd"],
-        exclude_patterns = ["README.md"]
+        extensions = QUARTO_SOURCE_SUFFIXES,
+        exclude_patterns = QUARTO_EXCLUDE_FILENAMES
 ) -> List[Path]:
     """
     List of all filepaths to render with quarto
@@ -62,7 +35,7 @@ def find_quarto_render_sources(
     if not path.exists():
         raise FileNotFoundError(f"cannot find {path=}")
     if not path.is_dir():
-        if path.suffix in extensions and all(p not in str(path) for p in exclude_patterns):
+        if path.suffix in extensions and all(p.lower() not in str(path).lower() for p in exclude_patterns):
             return [path]
     else:
         targets = []
@@ -88,9 +61,9 @@ def quarto_render_file(path: Path):
 
 def _micromamba_render(path: str, prefix_path: str):
     log.info(" ".join(map(str, ["rendering", path, "in", prefix_path])))
-    which_quarto = umrun(["which", "quarto"], prefix=prefix_path, capture_output=True).stdout
+    which_quarto = micromamba_run(["which", "quarto"], prefix=prefix_path, capture_output=True).stdout
     log.info(f"which quarto: {which_quarto}")
-    return umrun(["quarto", "render", path], prefix = prefix_path, capture_output=False)
+    return micromamba_run(["quarto", "render", path], prefix = prefix_path, capture_output=False)
 
 
 def _uvx_render(path: str):
@@ -131,8 +104,8 @@ def resolve_conda_prefix(path):
 
 
 def create_micromamba_env(env_yml: Path, prefix_path: Path):
-    return umrun(
-        cmd = [_um, "env", "create", "-f", env_yml, "-p", prefix_path, "-y"],
+    return micromamba_run(
+        cmd = [mamba_exe, "env", "create", "-f", env_yml, "-p", prefix_path, "-y"],
         capture_output = False
     )
 

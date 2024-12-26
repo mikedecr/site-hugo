@@ -1,6 +1,6 @@
 import os
 
-from ._logging import log
+from .logging import log
 
 
 def create_links(target_dir, link_dir):
