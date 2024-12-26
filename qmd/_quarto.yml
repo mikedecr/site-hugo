@@ -4,6 +4,9 @@ project:
     - "*.qmd"
     - ".md"
 
-format: hugo-md
+format: 
+  hugo-md:
+    mermaid:
+      theme: dark
 freeze: auto
 
