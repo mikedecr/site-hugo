@@ -3,11 +3,12 @@ name = "mikedecr-website"
 description = "Personal website"
 version = "0.1.0"
 dependencies = [
-    # "quarto>=0.1.0",  # no... this is a python pkg for rendering in subprocesses
     "quarto-cli == 1.6.*",
     "typer>=0.14.0",
     "hugo == 0.138.0",
+    "pyyaml>=6.0.2",
 ]
+requires-python = ">=3.11"
 # author = "Michael DeCrescenzo"
 # Repository = "https://github.com/mikedecr/site-hugo"
 # Issues = "https://github.com/mikedecr/site-hugo/issues"
@@ -26,3 +27,4 @@ themes = "submodules/themes"
 [mkd.links.qmd.blog]
 causal-bayes-3-pillars = "submodules/blog-monorepo/causal-bayes-3-pillars"
 nonflat-priors = "submodules/blog-monorepo/nonflat-priors"
+scrape-memoize-scum-data = "submodules/blog-monorepo/scrape-memoize-scum-data"
