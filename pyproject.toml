@@ -25,6 +25,7 @@ mkd = "mkd.main:app"
 themes = "submodules/themes"
 
 [mkd.links.qmd.blog]
+# multi-env-blog = "submodules/blog-monorepo/multi-env-blog"
 causal-bayes-3-pillars = "submodules/blog-monorepo/causal-bayes-3-pillars"
-nonflat-priors = "submodules/blog-monorepo/nonflat-priors"
 scrape-memoize-scum-data = "submodules/blog-monorepo/scrape-memoize-scum-data"
+nonflat-priors = "submodules/blog-monorepo/nonflat-priors"

@@ -1,4 +1,5 @@
 project:
+  type: hugo
   output-dir: ../hugo/content
   render:
     - "*.qmd"
@@ -9,4 +10,3 @@ format:
     mermaid:
       theme: dark
 freeze: auto
-

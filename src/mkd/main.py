@@ -65,6 +65,7 @@ def quarto_render_file(path: Path):
     _files_dir: Path = path.parent / (path.stem + "_files")
     if not _files_dir.exists():
         return
+    log.warning(f"detected {_files_dir}, must copy these to output")
     # compute path/to/output/index_files
     quarto_yml_path: Path = _find_quarto_yml(path)
     quarto_output_dir: Path = _quarto_output_dir(quarto_yml_path)
