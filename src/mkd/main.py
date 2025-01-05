@@ -59,22 +59,20 @@ def quarto_render_file(path: Path):
         out = _micromamba_render(path, conda_prefix)
     else:
         out = _uvx_render(path)
-    # currently hugo-md does not move the index_files dir
-    # so we need to make an inference about where that should have gone
-    # only if index_files exists
-    _files_dir: Path = path.parent / (path.stem + "_files")
-    if not _files_dir.exists():
+    # currently hugo-md does not copy the index_files to output-dir
+    # so we need to make an inference about where in output-dir that should have gone
+    index_files_dir: Path = path.parent / (path.stem + "_files")
+    if not index_files_dir.exists():
         return
-    log.warning(f"detected {_files_dir}, must copy these to output")
-    # compute path/to/output/index_files
+    log.info(f"detected {index_files_dir}, must copy these to output")
     quarto_yml_path: Path = _find_quarto_yml(path)
     quarto_output_dir: Path = _quarto_output_dir(quarto_yml_path)
-    src_branch_below_quarto = path.relative_to(quarto_yml_path.parent).parent
+    src_branch_below_quarto: Path = path.relative_to(quarto_yml_path.parent).parent
     dest_page_dir = quarto_output_dir / src_branch_below_quarto
-    dest_page_files = dest_page_dir / _files_dir.stem
-    assert dest_page_files.parent.exists()
-    log.info(f"copying {_files_dir} to {dest_page_files}")
-    return shutil.copytree(_files_dir, dest_page_files, dirs_exist_ok=True)
+    dest_index_files_dir = dest_page_dir / index_files_dir.stem
+    assert dest_index_files_dir.parent.exists()
+    log.info(f"copying {index_files_dir} to {dest_index_files_dir}")
+    return shutil.copytree(index_files_dir, dest_index_files_dir, dirs_exist_ok=True)
 
 
 def _quarto_output_dir(quarto_yml_path: Path):
