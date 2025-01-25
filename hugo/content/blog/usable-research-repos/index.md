@@ -12,12 +12,12 @@ image: featured.png
 ## Why do so many research projects' replication archives hurt?
 
 My mind has been on **replication archives** lately.
-I often go digging in other peoples' projects for data to practice some new statistical skill or another.
-And I have been digging in *my own* projects lately to refactor some code for a dormant academic project.
+I am not an academic anymore, but I sometimes go digging in other peoples' projects for data to practice some new statistical skill or another.
+And I sometimes go digging in *my own* projects lately to refactor some code for a dormant project.
 In both of these situations I am interfacing with some else's code (me today ≠ me in the past), and in both situations I am having a bad time.
 
-The academic community has been increasingly interested in replication archives since they realized that a lot of public research is, err, systematically untrustworthy.
-Formal requirements (from journals) and informal pressures (from other researchers) in academia are increasingly requiring authors to prepare these repositories for new projects, which seems good on the whole.
+has been increasingly interested in replication archives since they realized that a lot of public research is, err, systematically untrustworthy.
+Formal requirements and social / professional pressures in academia are increasingly requiring authors to prepare these repositories for new projects, which seems good on the whole.
 But if you ever go digging in these republication archives, you quickly realize that just because authors provide data and code doesn't mean that the experience is all that helpful.
 But why?
 You can see the data, maybe the code runs without errors...What's the problem?
@@ -28,7 +28,7 @@ If it were, the code would not look the way it does.
 Now, I'm not an academic anymore, so don't have much stake in this.
 But I do write quantitative research code in a collaborative environment at work all the time, with the intention that my code will be consumed and repurposed by others.
 As it turns out, writing code under these conditions changes how you write that code, improves the reliability of your work, and has positive effects on the community in which your code is deliberated and consumed.
-This blog post will attempt to distill some of the things I have learned into discrete, attainable lessons for writing academic research code.
+This blog post will attempt to distill some things I have learned into discrete, attainable lessons for writing academic research code.
 
 Before I get too concrete though, I make a normative argument for caring about this at all.
 Changing the way code is written takes effort, and I want to argue why that effort would be justified.
@@ -62,9 +62,10 @@ And crucially, if we wanted to use the data or some of the code from this projec
 **The product model.**
 The product model organizes its code as if to offer it as a product for someone else to use.
 The code is a key part of the research package, and researchers care that it is a good experience, just as they care about the quality of their writing.
+
 An important assertion here is that there is value in the code even if the paper did not exist.
 If a project proposes a method to measure or estimate a key variable, those methods are valuable outside of the context of the written paper, so part of the *product* of the project is to make these tools available and usable for other researchers to benefit from.
-Projects that propose a new model make this model available for others to use with a practical interface.
+Projects that propose a new model make this model available for others to use with the appropriate interface.
 Indeed, there may be a notion of *interface* as distinct from *infrastructure*; the code that drives the project at a high level is uniform and understandable, and the ugly code that does heavy lifting might be encapsulated away from the interface.
 And better yet, the important infrastructure pieces are modularly designed: they may combine at the locus of the project, but the components can exist without reference to one another and could be exchanged for other components that perform similar functions.
 
@@ -82,7 +83,7 @@ Think about every paper you have ever read that proposes a new way to measure so
 Did those authors provide a code module to do the appropriate calculations on new data of appropriate shape?
 Did those authors provide an interface for validating these measures against alternatives?
 I suspect that in most cases the answer is no.
-The authors may put their code online, but it isn't online so that you can use it.
+The authors may put their code online, but it isn't online *so that you can use it*.
 Not really.
 
 I don't want to point fingers, so I will use some examples from my own academic work to show that I, too, wasn't thinking enough about this.
@@ -132,8 +133,8 @@ Modularity describes how those tools are combined for easier development (for yo
 
 Whenever I want to download a project's data and code, I *only* want to get it from a version control platform like Github.
 I want to fork the project, see the history, get the intended file structure, and maybe even contribute to the project by opening issues or pull requests.
-I [never](https://twitter.com/rmkubinec/status/1514142461949583361) want to go to Harvard Dataverse.
-I'm sure Dataverse was a great idea when it first hit the scene, but by today's standards, it feels like it is chasing yesterday's problems, like the problem of "pure replication".
+I [have never wanted to go to Harvard Dataverse](https://twitter.com/rmkubinec/status/1514142461949583361).
+I'm sure Dataverse was a great idea for some people when it first hit the scene, but by today's standards, it feels like it is chasing yesterday's problems, like the problem of "pure replication".
 But I think the credibility problems in social science warrant more than old-world-style replication.
 We should be looking for platforms that accommodate and encourage sharing, re-use, mutual contribution, and stress-testing by others.
 
@@ -164,7 +165,7 @@ A lot of the time, we keep all of our nasty and idiosyncratic data-cleaning code
 On a good day, we may smuggle the data-cleaning code into a different file, but that doesn't make a huge difference because the flow of the project is still mostly linear from raw data to analysis.
 The user cannot really avoid spending time in the darkest corners of the code.
 
-To be fair, it isn't necessary that an academic project's code base should produce an end result as concptually gorgeous as tidyverse tools are.
+To be fair, it isn't necessary that an academic project's code base should produce an end result as conceptually gorgeous as tidyverse tools are.
 But there are probably some intertwined components in the research project that could be separated into interface and infrastructure layers somehow, and readers who really want to investigate the infrastructure are free to do so.[^1]
 
 Thinking again about a paper that proposes a new way to measure a key variable, or a new method to analyze some data:
@@ -312,24 +313,27 @@ But in case you are thinking about the following things, I just want you to know
 -   **Writing better code will not help my paper get published.**
     Yeah, that sucks, right?
     Why is that?
-    If we can agree that more usable code will make it easier to share tools among researchers, test-drive the contributions of other researchers, and bolster the credibility of your field overall, why does your publication model think that it's a waste of your time as a researcher?
+    If we can agree that more usable code will make it easier to share tools among researchers, test-drive the contributions of other researchers, and bolster the credibility of your field overall, why does your model of career success think that it's a waste of your time as a researcher?
+    I think this is y'all's problem, not mine.
 -   **This all sounds very hard, and I am not a software engineer.**
     You shouldn't have to be a software engineer if you do not want to be.
-    What I *do* wish is for your field to sustain broader collaboration where you have a team of people who are good at different things so your field can put out more reliable products.
-    But many fields care about superstar researchers.
+    What I *do* wish is for your field to sustain broader collaboration where you have a team of people who are good at different things, so your field can put out more reliable products.
+    But many fields care about superstar researchers, not functional research teams.
     I do not care about superstar researchers.
+    As a member of the public, I care about quality research.
+    You, specifically, may not have to git gud, but *somebody* should.
 
 ## What we haven't said
 
-Here's a recap of all the things we did not mention about replication / archiving discussions:
+Here's a recap of some things we did not talk about regarding the archiving or replication of research code:
 
 -   Packaging environments and dependencies
 -   Relatedly, containerization
 -   Solutions for long-term archiving
 -   Commenting code / other documentation
 
-I think these problems are important to varying degrees.
-I mean, I am not as concerned about containerization, but you are free to be.
+I think these problems are of varying importance.
+(To be honest, I am simply not concerned about containerization, but you are free to be.)
 But these issues are more commonly discussed than the design, usability, and shareability of code.
 So I didn't talk about them.
 
