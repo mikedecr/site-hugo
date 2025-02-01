@@ -1,1 +1,11 @@
-/Users/michaeldecrescenzo/projects/site-hugo/submodules/themes/hugo-theme-re-terminal/assets/css/variables.scss
+:root {
+  /* COLOR VARIABLES */
+  --background: color-mix(in srgb, var(--accent) 2%, #1D1E28 98%);
+  --accent-contrast-color: black;
+  --color: white;
+  --border-color: rgba(255, 255, 255, .1);
+
+  /* MEDIA QUERIES */
+  --phone: "max-width: 684px";
+  --tablet: "max-width: 900px";
+}

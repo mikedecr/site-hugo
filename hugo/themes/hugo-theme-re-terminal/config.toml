@@ -1,1 +1,4 @@
-/Users/michaeldecrescenzo/projects/site-hugo/submodules/themes/hugo-theme-re-terminal/config.toml
+[module]
+[module.hugoVersion]
+extended = true
+min = '0.128.0'

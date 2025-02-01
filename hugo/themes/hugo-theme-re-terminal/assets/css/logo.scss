@@ -1,1 +1,8 @@
-/Users/michaeldecrescenzo/projects/site-hugo/submodules/themes/hugo-theme-re-terminal/assets/css/logo.scss
+.logo {
+  display: flex;
+  align-items: center;
+  text-decoration: none;
+  background: var(--accent);
+  color: color-mix(in srgb, var(--accent), var(--accent-contrast-color) 90%);;
+  padding: 5px 10px;
+}

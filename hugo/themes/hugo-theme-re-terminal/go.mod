@@ -1,1 +1,3 @@
-/Users/michaeldecrescenzo/projects/site-hugo/submodules/themes/hugo-theme-re-terminal/go.mod
+module github.com/mirus-ua/hugo-theme-re-terminal
+
+go 1.22

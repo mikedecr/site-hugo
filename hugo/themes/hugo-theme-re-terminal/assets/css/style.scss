@@ -1,1 +1,20 @@
-/Users/michaeldecrescenzo/projects/site-hugo/submodules/themes/hugo-theme-re-terminal/assets/css/style.scss
+@import "variables";
+
+@import "font";
+@import "buttons";
+@import "form";
+
+@import "header";
+@import "menu";
+@import "logo";
+@import "main";
+@import "post";
+@import "pagination";
+@import "footer";
+@import "banner";
+
+@import "prism";
+@import "syntax";
+@import "code";
+@import "terms";
+@import "gist";
