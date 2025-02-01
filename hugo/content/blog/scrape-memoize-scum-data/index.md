@@ -340,10 +340,10 @@ times = system.time(
 )
 times
 ##    user  system elapsed 
-##   0.556   0.051   3.947
+##   0.357   0.042   3.703
 ```
 
-3.9 seconds per film?
+3.7 seconds per film?
 There are 27 films to get through.
 It's not a *huge* amount of time, but it longer than we need.
 
@@ -564,10 +564,10 @@ memo_times = system.time(
 )
 memo_times
 ##    user  system elapsed 
-##   0.058   0.003   0.354
+##   0.046   0.002   0.339
 ```
 
-0.354 seconds, a 11x speedup in this example.
+0.339 seconds, a 11x speedup in this example.
 
 ## Fulfilling our interface promise
 

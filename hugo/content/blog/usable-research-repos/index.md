@@ -16,7 +16,7 @@ I am not an academic anymore, but I sometimes go digging in other peoples' proje
 And I sometimes go digging in *my own* projects lately to refactor some code for a dormant project.
 In both of these situations I am interfacing with some else's code (me today ≠ me in the past), and in both situations I am having a bad time.
 
-has been increasingly interested in replication archives since they realized that a lot of public research is, err, systematically untrustworthy.
+The academic community has been increasingly interested in replication archives since they realized that a lot of public research is, err, systematically untrustworthy.
 Formal requirements and social / professional pressures in academia are increasingly requiring authors to prepare these repositories for new projects, which seems good on the whole.
 But if you ever go digging in these republication archives, you quickly realize that just because authors provide data and code doesn't mean that the experience is all that helpful.
 But why?
