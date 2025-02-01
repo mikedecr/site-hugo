@@ -1,18 +1,1 @@
-module.exports = function(api) {
-  api.cache(true);
-
-  const presets = [
-    [
-      "@babel/preset-env",
-      {
-        targets: "last 2 versions, >1%, not dead",
-      },
-    ],
-  ];
-  const plugins = [];
-
-  return {
-    presets,
-    plugins,
-  };
-};
+/Users/michaeldecrescenzo/projects/site-hugo/submodules/themes/hugo-theme-re-terminal/babel.config.js
