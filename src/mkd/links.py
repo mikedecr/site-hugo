@@ -1,4 +1,5 @@
 import os
+from pathlib import Path
 
 from .logging import log
 
@@ -25,9 +26,9 @@ def create_links(target_dir, link_dir):
             if file.startswith('.'):
                 log.debug(f"Skipping {file}, it starts with a dot.")
                 continue
-            target_file = os.path.join(root, file)
+            target_file = Path(os.path.join(root, file))
             relative_path = os.path.relpath(target_file, target_dir)
-            link_file = os.path.join(link_dir, relative_path)
+            link_file = Path(os.path.join(link_dir, relative_path))
             link_dir_path = os.path.dirname(link_file)
             if not os.path.exists(link_dir_path):
                 os.makedirs(link_dir_path)
@@ -37,5 +38,5 @@ def create_links(target_dir, link_dir):
             if os.path.exists(link_file) or os.path.islink(link_file):
                 log.debug(f"Replacing existing file or link: {link_file}")
                 os.remove(link_file)
-            os.link(target_file, link_file)
+            link_file.symlink_to(target_file)
             log.info(f"Created link: {link_file} -> {target_file}")

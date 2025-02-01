@@ -32,7 +32,7 @@ def find_quarto_render_sources(
     List of all filepaths to render with quarto
     """
     # ugh just in case
-    path = Path(path).resolve()
+    path = Path(path).absolute()
     if not path.exists():
         raise FileNotFoundError(f"cannot find {path=}")
     if not path.is_dir():
@@ -54,7 +54,7 @@ def quarto_render_file(path: Path):
     - if no env file, continue
     """
     # render the qmd and place it in _quarto.yml: project.output_dir
-    path = Path(path).resolve()
+    path = Path(path).absolute()
     if (conda_prefix := resolve_conda_prefix(path)):
         out = _micromamba_render(path, conda_prefix)
     else:
@@ -83,7 +83,7 @@ def _quarto_output_dir(quarto_yml_path: Path):
     flattened_yaml = flatten_nested_dict(yaml_data, sep = "/")
     output_branch = flattened_yaml["project/output-dir"]
     yaml_dir = quarto_yml_path.parent
-    return (yaml_dir / output_branch).resolve()
+    return (yaml_dir / output_branch).absolute()
 
 
 
@@ -281,7 +281,7 @@ def link(context: Context):
     link_to_target: Dict = flatten_nested_dict(link_toml, sep = "/")
     log.info("symlink recipe:\n" + str(link_to_target))
     for link_dir, target_dir in link_to_target.items():
-        create_links(Path(target_dir), Path(link_dir))
+        create_links(Path(target_dir).resolve(), Path(link_dir).resolve())
 
 
 if __name__ == "__main__":
