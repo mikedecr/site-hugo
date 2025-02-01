@@ -273,15 +273,25 @@ def flatten_nested_dict(nested, sep = "_"):
 @app.command()
 def init(context: Context):
     # currently just a "symlinks" step
-    link(context)
+    link(context, hard=True)
+    link(context, hard=False)
 
 
-def link(context: Context):
-    link_toml: Dict = get_nested_path(context.obj, "mkd", "links")
+def link(context: Context, hard=False):
+    if hard:
+        print("HARD")
+        links_leaf = "hard_links"
+    else:
+        links_leaf = "links"
+    link_toml: Dict = get_nested_path(context.obj, "mkd", links_leaf)
     link_to_target: Dict = flatten_nested_dict(link_toml, sep = "/")
     log.info("symlink recipe:\n" + str(link_to_target))
     for link_dir, target_dir in link_to_target.items():
-        create_links(Path(target_dir).resolve(), Path(link_dir).resolve())
+        create_links(
+            Path(target_dir).resolve(),
+            Path(link_dir).resolve(),
+            hard=hard
+        )
 
 
 if __name__ == "__main__":

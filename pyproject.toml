@@ -21,7 +21,7 @@ package = true
 mkd = "mkd.main:app"
 
 # register symlinks
-[mkd.links.hugo]
+[mkd.hard_links.hugo]
 themes = "submodules/themes"
 
 [mkd.links.qmd.blog]
