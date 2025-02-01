@@ -4,7 +4,7 @@ from pathlib import Path
 from .logging import log
 
 
-def create_links(target_dir, link_dir):
+def create_links(target_dir, link_dir, hard=False):
     """
     Create symlinks to all files in `target_dir`. 
     Links will be located at `link_dir`.
@@ -38,5 +38,10 @@ def create_links(target_dir, link_dir):
             if os.path.exists(link_file) or os.path.islink(link_file):
                 log.debug(f"Replacing existing file or link: {link_file}")
                 os.remove(link_file)
-            link_file.symlink_to(target_file)
-            log.info(f"Created link: {link_file} -> {target_file}")
+            # we should make this relative again...
+            if hard:
+                link_file.hardlink_to(target_file)
+                log.info(f"Created HARD link: {link_file} -> {target_file}")
+            else:
+                link_file.symlink_to(target_file)
+                log.info(f"Created link: {link_file} -> {target_file}")
