@@ -5,7 +5,7 @@ theme = 'hugo-theme-re-terminal'
 pagination.pagerSize = 5
 
 [params]
-themeColor = "orange"
+themeColor = "blue"
 contentTypeName = "posts"
 showMenuItems = 5
 
