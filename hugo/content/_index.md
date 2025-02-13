@@ -13,8 +13,8 @@ My PhD research focused on US electoral politics, public opinion, and Bayesian m
 
 ------------------------------------------------------------------------
 
-You can find me elsewhere on
+Find me elsewhere:
 
--   [GitHub](https://www.github.com/mikedecr)
--   [Bluesky](https://bsky.app/profile/mikedecr.bsky.social)
--   [Substack](https://substack.com/@mikedecr) (sparse though it is)
+-   GitHub: [mikedecr](https://www.github.com/mikedecr)
+-   Bluesky: [@mikedecr.computer](https://bsky.app/profile/mikedecr.computer)
+-   Substack: [mikedecr](https://substack.com/@mikedecr) (sparse though it is)
