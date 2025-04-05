@@ -177,13 +177,19 @@ which python
 
 So it is possible to both (a) get comfortable managing environments in the terminal, and (b) use the same GUI apps to edit your code as before.
 
-## One environment per project
+## Projects should never share environments
 
 Many people start using environments by building a single conda environment that they can activate from anywhere.
 This is a recipe for disaster, because different projects may want competing dependencies.
 
 This is one reason why you see "broke my conda environment again..." tweets.
 They may have been using the same environment for too many things.
+
+You should have one environment per project.
+Or more!
+Some projects require multiple environments.
+
+But you should never mix projects in one environment.
 
 ## Build environments into a local path
 
