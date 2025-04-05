@@ -29,7 +29,7 @@ If you are totally new, reading in order will help you get onboarded.
 
 ## Managing the environment is easy when you are consistent about it
 
-In his Statistical Rethinking lectures, Richard McElreath says that statistical machinery helps us solve problems [not because we are clever, but because we are rigorous](https://bsky.app/profile/andrewbaker.bsky.social/post/3llzdkk252k2h) in the application of statistical fundamentals.
+In his Statistical Rethinking lectures, Richard McElreath says that statistical machinery helps us solve problems [not because we are clever, but because we are rigorous](https://www.youtube.com/watch?v=lTFAB6QmwHM&) in the application of statistical fundamentals.
 
 Similarly, environments help you solve problems when they are applied rigorously.
 
@@ -124,7 +124,7 @@ The benefit of this is you can control many separate projects on your computer t
 
 -   Your projects need different versions of R or Python, depending on the project.
 -   One project needs some package, but another project doesn't need it.
--   You want to [prevent software upgrades from breaking your code](https://bsky.app/profile/andrewbaker.bsky.social/post/3llz3z7kjvs22), so you want to specify *which* version of a package you need for this project.
+-   You want to prevent software upgrades from breaking your code, so you want to specify *which* version of a package you need for this project.
 -   You want to test your project on another computer, and you need a way to quickly install the required dependencies on that other computer.
 -   You move your project to a different location on *your own* machine, and you need to make sure all of the dependencies are in the right place.
 
