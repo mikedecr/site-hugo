@@ -38,6 +38,8 @@ def find_quarto_render_sources(
     # skip any invisible directory
     if path.name.startswith("."):
         return []
+    if path.name == "_freeze":
+        return []
     if not path.is_dir():
         if path.suffix in extensions and all(p.lower() not in str(path).lower() for p in exclude_patterns):
             return [path]
