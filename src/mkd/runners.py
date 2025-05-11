@@ -1,4 +1,5 @@
 import os
+from pathlib import Path
 from subprocess import run, CompletedProcess
 from typing import List, Optional
 
@@ -13,6 +14,21 @@ def uv_run(
     log.info("uv_run: " + " ".join(map(str, cmd)))
     ret = run(cmd, capture_output = capture_output)
     return ret
+
+
+def pixi_run(
+    cmd: List[str],
+    manifest_path: Path | str = Path("./pixi.toml"),
+    capture_output: bool = True
+):
+    manifest_path = Path(manifest_path).resolve()
+    cmd = [
+        "pixi", "run",
+        "--manifest-path", str(manifest_path),
+        *cmd
+    ]
+    log.info("pixi_run: " + " ".join(map(str, cmd)))
+    return run(cmd, capture_output=capture_output)
 
 
 # for now we still assume there is a (micro)mamba executable
