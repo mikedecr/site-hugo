@@ -32,9 +32,12 @@ def find_quarto_render_sources(
     List of all filepaths to render with quarto
     """
     # ugh just in case
-    path = Path(path).absolute()
+    path = Path(path)
     if not path.exists():
         raise FileNotFoundError(f"cannot find {path=}")
+    # skip any invisible directory
+    if path.name.startswith("."):
+        return []
     if not path.is_dir():
         if path.suffix in extensions and all(p.lower() not in str(path).lower() for p in exclude_patterns):
             return [path]
@@ -54,7 +57,7 @@ def quarto_render_file(path: Path):
     - if no env file, continue
     """
     # render the qmd and place it in _quarto.yml: project.output_dir
-    path = Path(path).absolute()
+    path = Path(path)
     if (pixi_toml := resolve_pixi_manifest_path(path)):
         out = _pixi_render(qmd_path=path, pixi_manifest_path=pixi_toml)
     elif (conda_prefix := resolve_conda_prefix(path)):
@@ -72,7 +75,7 @@ def quarto_render_file(path: Path):
     src_branch_below_quarto: Path = path.relative_to(quarto_yml_path.parent).parent
     dest_page_dir = quarto_output_dir / src_branch_below_quarto
     dest_index_files_dir = dest_page_dir / index_files_dir.stem
-    assert dest_index_files_dir.parent.exists()
+    assert dest_index_files_dir.parent.exists(), dest_index_files_dir
     log.info(f"copying {index_files_dir} to {dest_index_files_dir}")
     return shutil.copytree(index_files_dir, dest_index_files_dir, dirs_exist_ok=True)
 
@@ -97,6 +100,9 @@ def _find_quarto_yml(path: Path):
             if name.startswith("_quarto") and name.endswith(".yml"):
                 return f
         # can't find it
+        parent = path.parent
+        if path == parent:
+            return None
         return _find_quarto_yml(path.parent)
     except NotADirectoryError:
         parent = path.parent
@@ -203,12 +209,16 @@ def render_quarto(
         render_files: List[Path] = find_quarto_render_sources(source_path)
         log.info("Found qmd source files:" +
                  "\n - ".join(map(str, render_files)))
-    except FileNotFoundError:
-        raise FileNotFoundError(f"{source_path=} does not exist")
+    except FileNotFoundError as e:
+        raise e
     if len(render_files) == 0:
         raise ValueError(f"Found no files to render in {source_path=}")
-    return [quarto_render_file(file) for file in render_files]
-
+    for file in render_files:
+        try:
+            quarto_render_file(file)
+        except Exception as e:
+            raise e
+    return 0
 
 # pin these here for now
 WEB_SOURCE = "qmd"
@@ -242,9 +252,20 @@ def clear(
 ):
     link_toml: Dict = get_nested_path(context.obj, "mkd", "links")
     kv_pairs: Dict[str, str] = flatten_nested_dict(link_toml, sep = "/")
-    qmd_paths = [k for k in kv_pairs if str(k).startswith("qmd")]
+    qmd_paths = [Path(k) for k in kv_pairs if str(k).startswith("qmd")]
     log.info(f"Unlinking {qmd_paths=}")
-    _ = [Path(p).unlink for p in qmd_paths]
+    # _ = [Path(p).rmdir() for p in qmd_paths]
+    _ = [_yeet(p) for p in qmd_paths]
+
+
+
+def _yeet(path: Path):
+    if path.is_dir():
+        _ = [_yeet(f) for f in path.iterdir()]
+        return path.rmdir()
+    else:
+        return path.unlink()
+
 
 
 
