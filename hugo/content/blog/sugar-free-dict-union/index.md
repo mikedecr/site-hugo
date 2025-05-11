@@ -214,15 +214,15 @@ But the behaviors of `ChainMap` are unusual compared to other approaches.
 We can learn how by reading the docstring.
 
 > class ChainMap(collections.abc.MutableMapping)
-> \| ChainMap(\*maps)
-> \|
-> \| A ChainMap groups multiple dicts (or other mappings) together
-> \| to create a single, updateable view.
+> ChainMap(\*maps)
+>
+> A ChainMap groups multiple dicts (or other mappings) together
+> to create a single, updateable view.
 
 OK so far so good...
 
-> \| The underlying mappings are stored in a list. That list is public and can
-> \| be accessed or updated using the *maps* attribute. There is no other state.
+> The underlying mappings are stored in a list. That list is public and can
+> be accessed or updated using the *maps* attribute. There is no other state.
 
 Interesting, let's see this:
 
@@ -234,7 +234,7 @@ chain.maps
 
 Let's go on.
 
-> \| Lookups search the underlying mappings successively until a key is found.
+> Lookups search the underlying mappings successively until a key is found.
 
 This sounds benign at first but it is actually opposite the behavior of other "union" methods.
 To demonstrate, let's give two different mappings an "X" key.
@@ -276,9 +276,9 @@ print(chain2["X"])
 
 And now the most "Pythonic" thing of all: mutating stuff that you don't want to be mutated.
 
-> \| In contrast, writes, updates, and deletions only operate
+> In contrast, writes, updates, and deletions only operate
 > on the first
-> \| mapping.
+> mapping.
 
 So if we try to add a new association, we mutate the first dictionary that we supplied to the `ChainMap`.
 Recall that we built this chain out of two dictionaries, `a` and `b`.
