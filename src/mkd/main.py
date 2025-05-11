@@ -8,7 +8,7 @@ from typer import Option, Context
 
 from .links import create_links
 from .logging import log
-from .runners import uv_run, micromamba_run, mamba_exe
+from .runners import uv_run, micromamba_run, mamba_exe, pixi_run
 
 from .app import app
 
@@ -55,7 +55,9 @@ def quarto_render_file(path: Path):
     """
     # render the qmd and place it in _quarto.yml: project.output_dir
     path = Path(path).absolute()
-    if (conda_prefix := resolve_conda_prefix(path)):
+    if (pixi_toml := resolve_pixi_manifest_path(path)):
+        out = _pixi_render(qmd_path=path, pixi_manifest_path=pixi_toml)
+    elif (conda_prefix := resolve_conda_prefix(path)):
         out = _micromamba_render(path, conda_prefix)
     else:
         out = _uvx_render(path)
@@ -118,6 +120,23 @@ def _micromamba_render(path: str, prefix_path: str):
 
 def _uvx_render(path: str):
     return uv_run(["quarto", "render", path], capture_output = False)
+
+
+def _pixi_render(qmd_path: Path, pixi_manifest_path: Path = Path("./pixi.toml")):
+    return pixi_run(
+        cmd = ["quarto", "render", qmd_path],
+        manifest_path=pixi_manifest_path,
+        capture_output=False
+    )
+
+
+def resolve_pixi_manifest_path(path: Path):
+    """
+    return path to pixi.toml else None
+    """
+    maybe_pixi_toml: Path = Path(path).parent / "pixi.toml"
+    if maybe_pixi_toml.exists():
+        return maybe_pixi_toml
 
 
 def resolve_conda_prefix(path):
