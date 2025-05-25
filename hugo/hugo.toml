@@ -13,8 +13,8 @@ showMenuItems = 5
 [languages.en.params]
     readMore = "Read More"
     menuMore = "Show More"
-    newerPosts = "Next post"
-    olderPosts = "Previous post"
+    newerPosts = "Newer posts"
+    olderPosts = "Older posts"
     [languages.en.params.logo]
         logoText = "Michael DeCrescenzo"
 
