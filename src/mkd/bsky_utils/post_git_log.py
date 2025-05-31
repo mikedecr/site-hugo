@@ -1,10 +1,7 @@
-from typing import Optional
-from datetime import date as Date
-
 from rich import print as rprint
+from bsky_bridge import post_text as bsky_post_text
 
 from .bsky_session import session as bsky_session
-from bsky_bridge import post_text as bsky_post_text
 from .git_log import GitLog
 
 

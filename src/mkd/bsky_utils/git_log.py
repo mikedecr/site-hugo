@@ -49,6 +49,3 @@ class GitLog(BaseModel):
             parsed: dict[str, str] = dict(hash=hash, message=msg)
             res.append(parsed)
         return res
-
-
-gl = GitLog(date=Date(2025, 5, 29), n = None)
