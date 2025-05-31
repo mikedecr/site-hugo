@@ -39,7 +39,6 @@ class GitLog(BaseModel):
         if not bstr:
             return []
         msgs: list[str] = bstr.decode("utf-8").strip().split("\n")
-        print(msgs)
         # combine results
         res: list[dict] = []
         if not msgs:

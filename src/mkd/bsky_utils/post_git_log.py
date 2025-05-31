@@ -1,6 +1,8 @@
 from typing import Optional
 from datetime import date as Date
 
+from rich import print as rprint
+
 from .bsky_session import session as bsky_session
 from bsky_bridge import post_text as bsky_post_text
 from .git_log import GitLog
@@ -21,6 +23,10 @@ def date_post_text(repo_name: str, gitlog: GitLog):
     return '\n'.join([header, *commits])
 
 
-def post_git_log(repo_name: str, gitlog: GitLog):
+def post_git_log(repo_name: str, gitlog: GitLog, dry_run=True):
     text: str = date_post_text(repo_name=repo_name, gitlog=gitlog)
-    return bsky_post_text(session=bsky_session, text=text)
+    rprint(text)
+    if dry_run:
+        return
+    else:
+        return bsky_post_text(session=bsky_session, text=text)
