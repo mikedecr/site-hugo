@@ -61,11 +61,11 @@ def quarto_render_file(path: Path):
     # render the qmd and place it in _quarto.yml: project.output_dir
     path = Path(path)
     if (pixi_toml := resolve_pixi_manifest_path(path)):
-        out = _pixi_render(qmd_path=path, pixi_manifest_path=pixi_toml)
+        _ = _pixi_render(qmd_path=path, pixi_manifest_path=pixi_toml)
     elif (conda_prefix := resolve_conda_prefix(path)):
-        out = _micromamba_render(path, conda_prefix)
+        _ = _micromamba_render(path, conda_prefix)
     else:
-        out = _uvx_render(path)
+        _ = _uvx_render(path)
     # currently hugo-md does not copy the index_files to output-dir
     # so we need to make an inference about where in output-dir that should have gone
     index_files_dir: Path = path.parent / (path.stem + "_files")
@@ -91,7 +91,6 @@ def _quarto_output_dir(quarto_yml_path: Path):
     output_branch = flattened_yaml["project/output-dir"]
     yaml_dir = quarto_yml_path.parent
     return (yaml_dir / output_branch).absolute()
-
 
 
 def _find_quarto_yml(path: Path):
