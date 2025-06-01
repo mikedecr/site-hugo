@@ -66,10 +66,9 @@ pow_rec(7, 6) == example
 
 **This blog post will employ this duality between recursion and iteration to create images of the [*Mandelbrot set*](https://en.wikipedia.org/wiki/Mandelbrot_set) using R.**
 Although there are
-[plenty](https://www.r-bloggers.com/2014/12/the-mandelbrot-set-in-r/)
-of [other](https://www.dandelbrot.com/post/the-mandelbrot-set-in-r/)
-blog [posts](https://cerebralmastication.com/2009/02/mandelbrot-set-in-r/)
-that visualize the Mandelbrot set in R,[^2]
+[plenty](https://web.archive.org/web/20241202193942/https://www.r-bloggers.com/2014/12/the-mandelbrot-set-in-r/)
+of [other](https://web.archive.org/web/20240204234247/https://www.dandelbrot.com/post/the-mandelbrot-set-in-r/)
+blog posts that visualize the Mandelbrot set in R,[^2]
 I have only seen them implement an iterative approach with a loop.
 But the Mandelbrot set is mathematically defined with recursion!
 So we ought to be able to implement a recursive approach that is, hopefully, more succinct and slick.[^3]
@@ -236,7 +235,8 @@ ggplot(d) +
 [^1]: A classic programming book.
     You can read it online for free as [HTML](https://mitp-content-server.mit.edu/books/content/sectbyfn/books_pres_0/6515/sicp.zip/full-text/book/book.html) or as a [PDF](https://web.mit.edu/6.001/6.037/sicp.pdf)
 
-[^2]: There is even an R package called [`mandelbrot`](https://cran.r-project.org/web/packages/mandelbrot/index.html) which although it dispatches the implementation to C, also uses [iteration](https://github.com/blmoore/mandelbrot/blob/fdb7b75294317f2111b45b9bea05c04251750c64/src/mandelbrot.c#L40-L51).
+[^2]: There is even an R package called [`mandelbrot`](https://cran.r-project.org/web/packages/mandelbrot/index.html), which dispatches the implementation to C.
+    It also uses [iteration](https://github.com/blmoore/mandelbrot/blob/fdb7b75294317f2111b45b9bea05c04251750c64/src/mandelbrot.c#L40-L51), but that makes sense for production C code.
 
 [^3]: We will also use newer plotting tools to visualize the results---`ggplot` instead of `graphics::image` like the older posts.
 
