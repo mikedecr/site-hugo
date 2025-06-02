@@ -32,7 +32,7 @@
   &-meta {
     font-size: 1rem;
     margin-bottom: 10px;
-    color: color-mix(in srgb, var(--accent), transparent 30%);;
+    color: color-mix(in srgb, var(--accent), transparent 30%);
 
     & > *:not(:first-child) {
       &::before {
@@ -78,6 +78,10 @@
 
   &-content {
     margin-top: 30px;
+    
+    & a {
+      color: var(--article-link-color);
+    }
   }
 
   &-cover {
@@ -86,7 +90,7 @@
     margin: 40px 0;
     padding: 20px;
 
-    @media (var(--phone)) {
+    @media (max-width: $phone) {
       padding: 10px;
       border-width: 10px;
     }
