@@ -1,4 +1,4 @@
-baseURL = 'https://mikedecr.netlify.app'
+baseURL = 'https://mikedecr.computer'
 languageCode = 'en-us'
 title = ':: Michael DeCrescenzo'
 theme = 'hugo-theme-re-terminal'
