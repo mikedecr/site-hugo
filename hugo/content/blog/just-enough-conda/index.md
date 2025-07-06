@@ -1,6 +1,9 @@
 ---
 title: Just enough Conda advice
 subtitle: Easy enough for beginners, good enough for seasoned users
+summary: >-
+  The best way to make things "just work" is for to design your workflow so that
+  common mistakes are simply impossible.
 author: Michael DeCrescenzo
 date: 2025-04-05T00:00:00.000Z
 ---

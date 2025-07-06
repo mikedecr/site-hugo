@@ -5,6 +5,9 @@ categories:
   - r
 title: |
   The Mandelbrot set, in R, with recursion instead of iteration
+summary: >
+  If the underlying function is recursive, then let's build the image with
+  recursion.
 date: '2023-03-11'
 knitr:
   opts_chunk:

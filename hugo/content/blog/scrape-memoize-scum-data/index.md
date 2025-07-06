@@ -5,6 +5,7 @@ categories:
   - r
 title: Scraping the 'S.C.U.M. score' data from the 'Kill James Bond' website
 subtitle: An example with function memoization
+summary: Optimizing a web-scraping routine with function memoization.
 date: '2024-03-09'
 execute:
   echo: true

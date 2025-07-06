@@ -3,6 +3,11 @@ author: Michael DeCrescenzo
 categories:
   - code
 title: Replication code should be more usable.
+summary: >
+  My main argument is that the code was not really designed to be understood or
+  manipulated by other people.
+
+  If it were, the code would not look the way it does. 
 date: '2022-05-15'
 draft: false
 image: featured.png

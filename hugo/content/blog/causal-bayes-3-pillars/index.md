@@ -8,6 +8,11 @@ title: |
   Bayesian modeling and three "pillars" of causal inference
 subtitle: |
   Reinterpreting potential outcomes, identification assumptions, and estimation
+summary: >
+  I do not believe that Bayesian modeling is the only way to truth and light.
+
+  But I do believe that single-minded focus on "unbiasedness" in all forms will
+  produce unreliable inferences, Bayesian or otherwise.
 excerpt: >
   I do not believe that Bayesian modeling is the only way to truth and light.
 

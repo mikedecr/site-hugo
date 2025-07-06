@@ -1,6 +1,13 @@
 ---
 title: |
   It's perfectly fine to talk about the "median voter" like this
+summary: >
+  If people think the "median voter theorem" _inherently_ justifies the claim
+  that "candidates should moderate", then I agree that is a misreading of the
+  original Downsian model.
+
+  But there is a colloquial understanding of the "median voter theorem" that is
+  rationalizable and useful on its own.
 author: Michael DeCrescenzo
 date: 2025-04-03T00:00:00.000Z
 ---

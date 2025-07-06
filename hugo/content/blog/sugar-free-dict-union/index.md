@@ -2,6 +2,9 @@
 title: 'Sugar-free: Python dictionaries'
 author: Michael DeCrescenzo
 date: 2025-05-08T00:00:00.000Z
+summary: >
+  Does there exist a _function_ in Python that merges two or more dictionaries
+  into a single, new dictionary?
 engine: knitr
 knitr:
   opts_chunk:
