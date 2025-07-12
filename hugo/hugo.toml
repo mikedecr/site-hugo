@@ -2,7 +2,8 @@ baseURL = 'https://mikedecr.computer'
 languageCode = 'en-us'
 title = ':: Michael DeCrescenzo'
 theme = 'hugo-theme-re-terminal'
-pagination.pagerSize = 5
+
+pagination.pagerSize = 10  # ACTUALLY controls num. blog entries per page.
 
 [params]
 themeColor = "blue"
