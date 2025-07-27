@@ -6,7 +6,7 @@ theme = 'hugo-theme-re-terminal'
 pagination.pagerSize = 10  # ACTUALLY controls num. blog entries per page.
 
 [params]
-themeColor = "blue"
+themeColor = "kanagawa"
 contentTypeName = "posts"
 showMenuItems = 5
 
