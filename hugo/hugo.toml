@@ -1,6 +1,6 @@
 baseURL = 'https://mikedecr.computer'
 languageCode = 'en-us'
-title = ':: Michael DeCrescenzo'
+title = ':: mikedecr[.]computer'
 theme = 'hugo-theme-re-terminal'
 
 pagination.pagerSize = 10  # ACTUALLY controls num. blog entries per page.
@@ -17,7 +17,7 @@ showMenuItems = 5
     newerPosts = "Newer posts"
     olderPosts = "Older posts"
     [languages.en.params.logo]
-        logoText = "Michael DeCrescenzo"
+        logoText = "mikedecr[.]computer"
 
 # nav menu
 [languages.en.menu]
