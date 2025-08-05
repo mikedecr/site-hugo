@@ -3,6 +3,3 @@ title: Blog posts
 # we tolerate this here since it's site-specific
 output-file: _index.md
 ---
-
-Blog reconstruction in progress...
-
