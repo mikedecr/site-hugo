@@ -3,6 +3,7 @@ from pathlib import Path
 # from subprocess import run, CompletedProcess
 import shutil
 from typing import Any, Dict, List
+from typing_extensions import Annotated
 
 from typer import Option, Context
 
@@ -13,6 +14,13 @@ from .app import app
 
 from logging import getLogger
 log = getLogger(__name__)
+
+
+# types...
+
+def OptFlag(default: bool, *args, **kwargs):
+    return Annotated[bool, Option(*args, **kwargs)](default)
+
 
 QUARTO_SOURCE_SUFFIXES = [
     ".md",
@@ -276,8 +284,7 @@ def _yeet(path: Path):
 @app.command()
 def build(
         context: Context,
-        quarto: bool = Option(True, "--quarto", "-q",
-                              help = "Render quarto files in source directory"),
+        quarto: bool = OptFlag(True, "--quarto", "-q", help = "Render quarto files in source directory"),
         source_dir: str = Option("qmd", "--source-dir", "-s",
                                  help = DOC_SOURCE_DIR)
 ):
@@ -286,7 +293,8 @@ def build(
     - serve site
     """
     init(context)
-    render_quarto(source_dir)
+    if quarto:
+        render_quarto(source_dir)
     serve()
 
 
@@ -321,7 +329,6 @@ def init(context: Context):
 
 def link(context: Context, hard=False):
     if hard:
-        print("HARD")
         links_leaf = "hard_links"
     else:
         links_leaf = "links"
