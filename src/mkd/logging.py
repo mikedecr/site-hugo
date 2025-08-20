@@ -8,5 +8,3 @@ logging.basicConfig(
     datefmt="[%X]",
     handlers=[RichHandler(markup=True)]
 )
-
-log = logging.getLogger("mkd")

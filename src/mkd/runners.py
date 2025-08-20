@@ -3,7 +3,8 @@ from pathlib import Path
 from subprocess import run, CompletedProcess
 from typing import List, Optional
 
-from .logging import log
+from logging import getLogger
+log = getLogger(__name__)
 
 
 def uv_run(

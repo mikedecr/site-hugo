@@ -1,7 +1,8 @@
 import os
 from pathlib import Path
+from logging import getLogger
 
-from .logging import log
+log = getLogger(__name__)
 
 
 def create_links(target_dir, link_dir, hard=False):

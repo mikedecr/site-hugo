@@ -7,11 +7,12 @@ from typing import Any, Dict, List
 from typer import Option, Context
 
 from .links import create_links
-from .logging import log
 from .runners import uv_run, micromamba_run, mamba_exe, pixi_run
 
 from .app import app
 
+from logging import getLogger
+log = getLogger(__name__)
 
 QUARTO_SOURCE_SUFFIXES = [
     ".md",
