@@ -1,6 +1,6 @@
 baseURL = 'https://mikedecr.computer'
 languageCode = 'en-us'
-title = ':: mikedecr[.]computer'
+title = ':: mikedecr.computer'
 theme = 'hugo-theme-re-terminal'
 
 pagination.pagerSize = 10  # ACTUALLY controls num. blog entries per page.
@@ -43,7 +43,22 @@ showMenuItems = 5
 
 # --- for quarto ---
 # hugo shouldn't touch these
-ignoreFiles = [ "\\.qmd$", "\\.ipynb$", "\\.py$" ]
+# [module]
+# [[module.mounts]]
+# "source" = "content"
+# "target" = "content"
+[module]
+[[module.mounts]]
+source = "content"
+target = "content"
+excludeFiles = [
+    "blog/**/*.qmd",
+    "blog/**/*.ipynb",
+    "blog/**/*.py",
+    "blog/**/pixi.toml",
+    "blog/**/pixi.lock"
+]
+
 # hugo should allow raw HTML in .md
 [markup.goldmark.renderer]
 unsafe= true
